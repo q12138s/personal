@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>bookshopping</display-name>
+  <welcome-file-list>
+  	<welcome-file>/</welcome-file>
+  </welcome-file-list>
+  
+  <!-- servletContext:代表整个web应用 -->
+  <!-- spring监听器 -->
+  <context-param>
+  	<param-name>contextConfigLocation</param-name>
+  	<param-value>classpath:spring/applicationContext-*.xml</param-value>
+  </context-param>
+  <listener>
+  		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  
+  
+  
+  <!-- springmvc前端控制器 -->
+  <servlet>
+  	<servlet-name>springmvc</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:spring/springmvc.xml</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>springmvc</servlet-name>
+  	<!-- springmvc对哪些请求解析
+  		*.action		解析所有的以.action结尾的请求
+  		/				解析所有的请求，除了jsp,需要在springmvc配置文件中定义静态资源的访问
+  	 -->
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 验证码servlet -->
+  <servlet>
+  	<servlet-name>checkImg</servlet-name>
+  	<servlet-class>com.feicui.utils.CheckImgServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>checkImg</servlet-name>
+  	<url-pattern>/checkImg</url-pattern>
+  </servlet-mapping>
+  
+  <!-- 字符编码的过滤器 -->
+  <filter>
+  	<filter-name>encoding</filter-name>
+  	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+  	<init-param>
+  		<param-name>encoding</param-name>
+  		<param-value>UTF-8</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>forceEncoding</param-name>
+  		<param-value>TRUE</param-value>
+  	</init-param>
+  </filter>
+  <filter-mapping>
+  	<filter-name>encoding</filter-name>
+  	<!-- 拦截所有的请求 -->
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <!-- 自动登录的过滤器 -->
+  <filter>
+  	<filter-name>autoLogin</filter-name>
+  	<filter-class>com.feicui.filter.AutoLoginFilter</filter-class>
+  </filter>
+  <!-- <filter-mapping>
+  	<filter-name>autoLogin</filter-name>
+  	配置对哪些请求拦截
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping> -->
+  
+  
+  
+  
+</web-app>

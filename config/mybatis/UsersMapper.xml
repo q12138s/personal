@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feicui.dao.UsersMapper">
+	<!-- 插入 -->
+	<insert id="saveUsers" parameterType="com.feicui.model.Users">
+		insert into users(username,password,nickname,email,role,state,activecode,updatetime)
+		values(#{username},#{password},#{nickname},#{email},#{role},#{state},#{activecode},#{updatetime})
+	</insert>
+	<!-- 删除 -->
+	<delete id="delUsers" parameterType="int">
+		delete from users where id = #{id}
+	</delete>
+	<!-- 修改 -->
+	<update id="updateUsers" parameterType="com.feicui.model.Users">
+		update users set username = #{username},password = #{password},nickname = #{nickname},email = #{email},role = #{role},state = #{state}
+		where id = #{id}
+	</update>
+	<!-- 根据id查询 -->
+	<select id="findUserById" parameterType="int" resultType="com.feicui.model.Users">
+		select * from users where id = #{id}
+	</select>
+	<!-- 查询所有 -->
+	<select id="findUsersList" resultType="com.feicui.model.Users">
+		select * from users
+	</select>
+	<!-- 登录 -->
+	<select id="login" parameterType="com.feicui.model.Users" resultType="com.feicui.model.Users">
+		select * from users where username = #{username} and password = #{password}
+	</select>
+	
+	<!-- 根据激活码查询用户 -->
+	<select id="findUserByCode" parameterType="string" resultType="com.feicui.model.Users">
+		select * from users where activecode = #{activecode}
+	</select>
+	
+	<!-- 根据用户名查询对象 -->
+	<select id="findUserByName" parameterType="string" resultType="com.feicui.model.Users">
+		select * from users where username = #{name}
+	</select>
+</mapper>
